@@ -1,8 +1,11 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import sys
 
-N = 25  # width and length of the network
+sys.setrecursionlimit(100000)
+
+N = 50  # width and length of the network
 trials = 100
 vertical = False
 
@@ -61,3 +64,4 @@ print(percolation_rates)
 
 plt.figure()
 plt.plot(np.arange(0.1, 1, 0.01), percolation_rates)
+plt.show()

@@ -11,20 +11,32 @@ for y in range(N):
     for x in range(N):
         if random.random() < P:
             open[y][x] = 1
-print(open)
 
-full[0] = open[0]
+cluster_id = 1
+clusters = []
+cluster = []
 for y in range(N):
     for x in range(N):
-        if full[y][x]:
-            if x > 0 and open[y][x - 1]:
-                full[y][x - 1] = 1
-            if x < N - 1 and open[y][x + 1]:
-                full[y][x + 1] = 1
-            if y > 0 and open[y - 1][x]:
-                full[y - 1][x] = 1
-            if y < N - 1 and open[y + 1][x]:
-                full[y + 1][x] = 1
+        if open[y][x] and not full[y][x]:
+            cluster.append([x, y])
+            has_neighbor = False
+            if x > 0 and open[y][x - 1] and not full[y][x - 1]:
+                cluster.append([x - 1, y])
+                has_neighbor = True
+            if x < N - 1 and open[y][x + 1] and not full[y][x + 1]:
+                cluster.append([x + 1, y])
+                has_neighbor = True
+            if y > 0 and open[y - 1][x] and not full[y - 1][x]:
+                cluster.append([x, y - 1])
+                has_neighbor = True
+            if y < N - 1 and open[y + 1][x] and not full[y + 1][x]:
+                cluster.append([x, y + 1])
+                has_neighbor = True
+            if not has_neighbor:
+                clusters.append(cluster)
+                cluster = []
+
+print(clusters)
 
 percolates = False
 for x in range(N):

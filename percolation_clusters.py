@@ -2,7 +2,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-N = 10  # width and length of the network
+N = 20  # width and length of the network
 P = 0.6  # probability of a given site to be open
 
 open = np.zeros((N, N))
@@ -35,17 +35,10 @@ def update_full(x_, y_, id_):
 id = 0
 for y in range(N):
     for x in range(N):
-        if not full[y][x]:
+        if open[y][x] and not full[y][x]:
             id += 1
             update_full(x, y, id)
 print(full)
-
-
-percolates = False
-for x in range(N):
-    if not full[N - 1][x]:
-        percolates = True
-print(percolates)
 
 plt.figure()
 plt.imshow(open, cmap='gray')

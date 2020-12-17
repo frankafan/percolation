@@ -38,7 +38,8 @@ for y in range(N):
         if open[y][x] and not full[y][x]:
             id += 1
             update_full(x, y, id)
-print(full)
+# print(full)
+print(max(np.ndarray.flatten(full)))
 
 plt.figure()
 plt.imshow(open, cmap='gray')

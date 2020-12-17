@@ -11,3 +11,6 @@ for y in range(N):
         if random.random() < P:
             network[y][x] = 1
 print(network)
+
+plt.imshow(network, cmap="gray")
+plt.show()

@@ -99,15 +99,17 @@ ly = 400
 p = 0.5927
 ncount = 0
 perc = []
+
 while len(perc) == 0:
     ncount = ncount + 1
     if ncount > 100:
         break
-z = rand(lx, ly) < p
-lw, num = measurements.label(z)
-perc_x = intersect1d(lw[0, :], lw[-1, :])
-perc = perc_x[where(perc_x > 0)]
-print("Percolation attempt", ncount)
+    z = rand(lx, ly) < p
+    lw, num = measurements.label(z)
+    perc_x = intersect1d(lw[0, :], lw[-1, :])
+    perc = perc_x[where(perc_x > 0)]
+    print("Percolation attempt", ncount)
+
 zz = asarray((lw == perc[0]))
 # zz now contains the spanning cluster
 zzz = zz.T  # Transpose
@@ -119,6 +121,7 @@ g1 = g[:, 0]
 g2 = g[:, 1]
 z1 = coltomat(g1, lx, ly)
 z2 = coltomat(g2, lx, ly)
+
 # Plot results
 figure(figsize=(16, 16))
 ax = subplot(221)
@@ -160,3 +163,4 @@ zbb = zbb / zbb.max()
 subplot(224, sharex=ax, sharey=ax)
 imshow(ztt, interpolation='nearest')
 title(" SC, BB and DE ")
+show()

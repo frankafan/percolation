@@ -18,27 +18,6 @@ for i in range(len(bonds)):
     if random.random() < P:
         bonds[i] = False
 
-
-def connect_bonds(self, neighbor):
-    if not self or not neighbor:
-        return
-    if self == neighbor:
-        return
-
-    if self[0] == neighbor[-1]:
-        self = neighbor[0:len(neighbor) - 1] + self
-        neighbor = False
-    elif self[-1] == neighbor[0]:
-        self = self + neighbor[1:len(neighbor)]
-        neighbor = False
-    return self, neighbor
-
-
-for i in range(len(bonds)):
-    for j in range(len(bonds)):
-        connect_bonds(bonds[i], bonds[j])
-print(bonds)
-
 for i in range(len(bonds)):
     if bonds[i]:
         bond_x = []
@@ -46,6 +25,6 @@ for i in range(len(bonds)):
         for j in range(len(bonds[i])):
             bond_x.append(bonds[i][j][0])
             bond_y.append(bonds[i][j][1])
-        plt.plot(bond_x, bond_y)
+        plt.plot(bond_x, bond_y, 'black')
 
 plt.show()

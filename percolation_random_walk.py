@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 N = 50  # width and length of the network
 P = 0.6  # probability of a given site to be open
-particles = 5
+particles = 10
 steps = 500
 
 open = np.zeros((N, N))
@@ -43,6 +43,7 @@ for y in range(N):
 
 # print(full)
 # print(max(np.ndarray.flatten(full)))
+
 
 
 def next_move(x_, y_, full_):
@@ -91,7 +92,7 @@ for i in range(particles):
     paths_x.append(path_x)
     paths_y.append(path_y)
 
-print(paths_x, paths_y)
+# print(paths_x, paths_y)
 
 # plt.figure()
 # plt.imshow(open, cmap='gray')
@@ -100,6 +101,7 @@ print(paths_x, paths_y)
 # plt.imshow(full)
 
 plt.figure()
+plt.imshow(full, cmap='hot')
 for i in range(len(paths_x)):
     plt.plot(paths_x[i], paths_y[i])
 

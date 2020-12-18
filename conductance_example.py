@@ -101,8 +101,8 @@ ncount = 0
 perc = []
 while len(perc) == 0:
     ncount = ncount + 1
-if ncount > 100:
-    break
+    if ncount > 100:
+        break
 z = rand(lx, ly) < p
 lw, num = measurements.label(z)
 perc_x = intersect1d(lw[0, :], lw[-1, :])

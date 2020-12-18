@@ -2,7 +2,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-P = 0.49
+P = 0.50
 N = 50
 
 bonds = []
@@ -62,11 +62,17 @@ def update_lattice(x_, y_):
 for x in range(N):
     update_lattice(x, 0)
 
+percolates = False
+for x in range(N):
+    if lattice[N - 1][x] == 1:
+        percolates = True
+print(percolates)
+
 plt.figure()
 plt.imshow(lattice, cmap='gray')
 plt.xlabel("x")
 plt.ylabel("y")
-plt.title(f"Lattice of spaces connected to the top edge by bonds at p = {round(P, 2)}")
-
+plt.title(
+    f"Lattice of spaces connected to the top edge by bonds at p = {round(P, 2)}")
 
 plt.show()

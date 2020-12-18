@@ -6,8 +6,9 @@ import sys
 sys.setrecursionlimit(100000)
 
 N = 50  # width and length of the network
-trials = 100
+trials = 10
 vertical = False
+SAVEFIG = False
 
 
 def update_full(x_, y_, vertical_):
@@ -52,11 +53,22 @@ for P in np.arange(0.1, 1, 0.01):
         if percolates:
             percolations += 1
 
-        # plt.figure()
-        # plt.imshow(open, cmap='gray')
-        #
-        # plt.figure()
-        # plt.imshow(full, cmap='gray')
+    if round(P, 2) % 0.1 == 0:
+        plt.figure()
+        plt.imshow(open, cmap='gray')
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.title(f"Lattice of open and closed sites at p = {P}")
+        if SAVEFIG:
+            plt.savefig(f"Lattice of open and closed sites at p = {P}")
+
+        plt.figure()
+        plt.imshow(full, cmap='gray')
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.title(f"Lattice of full and empty / closed sites at p = {P}")
+        if SAVEFIG:
+            plt.savefig(f"Lattice of full and empty / closed sites at p = {P}")
 
     percolation_rates.append(percolations / trials)
 
@@ -64,4 +76,9 @@ print(percolation_rates)
 
 plt.figure()
 plt.plot(np.arange(0.1, 1, 0.01), percolation_rates)
+plt.xlabel("$p$")
+plt.ylabel("Percolation probability")
+plt.title(f"Percolation probability over $p$ for {trials} trials")
+if SAVEFIG:
+    plt.savefig(f"Percolation probability over p for {trials} trials.png")
 plt.show()

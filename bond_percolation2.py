@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 
 P = 0.6
-N = 3
+N = 100
 
 lattice = np.zeros((N, N))
 vertical_bonds = []
@@ -21,4 +21,15 @@ for i in range(len(vertical_bonds)):
     if random.random() < P:
         horizontal_bonds[i] = False
 
-print(vertical_bonds)
+
+for i in range(len(vertical_bonds)):
+    if vertical_bonds[i]:
+        vertical_bond_x = [vertical_bonds[i][0][0], vertical_bonds[i][1][0]]
+        vertical_bond_y = [vertical_bonds[i][0][1], vertical_bonds[i][1][1]]
+        plt.plot(vertical_bond_x, vertical_bond_y, 'black')
+    if horizontal_bonds[i]:
+        horizontal_bond_x = [horizontal_bonds[i][0][0], horizontal_bonds[i][1][0]]
+        horizontal_bond_y = [horizontal_bonds[i][0][1], horizontal_bonds[i][1][1]]
+        plt.plot(horizontal_bond_x, horizontal_bond_y, 'black')
+
+plt.show()

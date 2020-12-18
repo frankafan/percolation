@@ -53,22 +53,22 @@ for P in np.arange(0.1, 1, 0.01):
         if percolates:
             percolations += 1
 
-    if round(P, 2) % 0.1 == 0:
+    if not round(P, 2) * 10 % 1:
         plt.figure()
         plt.imshow(open, cmap='gray')
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.title(f"Lattice of open and closed sites at p = {P}")
+        plt.title(f"Lattice of open and closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(f"Lattice of open and closed sites at p = {P}")
+            plt.savefig(f"Lattice of open and closed sites at p = {round(P, 2)}")
 
         plt.figure()
         plt.imshow(full, cmap='gray')
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.title(f"Lattice of full and empty / closed sites at p = {P}")
+        plt.title(f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(f"Lattice of full and empty / closed sites at p = {P}")
+            plt.savefig(f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
 
     percolation_rates.append(percolations / trials)
 

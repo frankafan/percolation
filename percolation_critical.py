@@ -31,6 +31,7 @@ def update_full(x_, y_, vertical_):
 
 
 percolation_rates = []
+j = 1
 for P in np.arange(0.1, 1, 0.01):
     percolations = 0
     for i in range(trials):
@@ -60,8 +61,7 @@ for P in np.arange(0.1, 1, 0.01):
         plt.ylabel("y")
         plt.title(f"Lattice of open and closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(
-                f"Lattice of open and closed sites at p = {round(P * 10)} / 10" + ".png")
+            plt.savefig(f"{j}")
 
         plt.figure()
         plt.imshow(full, cmap='gray')
@@ -70,8 +70,8 @@ for P in np.arange(0.1, 1, 0.01):
         plt.title(
             f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(
-                f"Lattice of full and empty / closed sites at p = {round(P * 10)} / 10" + ".png")
+            plt.savefig(f"{j}_")
+        j += 1
 
     percolation_rates.append(percolations / trials)
 

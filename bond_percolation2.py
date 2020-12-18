@@ -15,5 +15,10 @@ for y in range(N):
         if x < N - 1:
             horizontal_bonds.append([[x, y], [x + 1, y]])
 
+for i in range(len(vertical_bonds)):
+    if random.random() < P:
+        vertical_bonds[i] = False
+    if random.random() < P:
+        horizontal_bonds[i] = False
+
 print(vertical_bonds)
-print(horizontal_bonds)

@@ -2,10 +2,9 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-P = 0.6
-N = 10
+P = 0.49
+N = 50
 
-lattice = np.zeros((N, N))
 bonds = []
 for y in range(N):
     for x in range(N):
@@ -15,9 +14,17 @@ for y in range(N):
             bonds.append([[x, y], [x + 1, y]])
 
 for i in range(len(bonds)):
-    if random.random() < P:
+    if random.random() < (1 - P):
         bonds[i] = False
+# print(bonds)
 
+bond_flattened = []
+for bond in bonds:
+    if bond:
+        bond_flattened.extend(bond)
+# print(bond_flattened)
+
+plt.figure()
 for i in range(len(bonds)):
     if bonds[i]:
         bond_x = []
@@ -26,5 +33,40 @@ for i in range(len(bonds)):
             bond_x.append(bonds[i][j][0])
             bond_y.append(bonds[i][j][1])
         plt.plot(bond_x, bond_y, 'black')
+plt.ylim([N, 0])
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Lattice of connected bonds at p = {round(P, 2)}")
+
+lattice = np.zeros((N, N))
+
+
+def update_lattice(x_, y_):
+    if x_ < 0 or x_ >= N:
+        return None
+    if y_ < 0 or y_ >= N:
+        return None
+    if lattice[y_][x_]:
+        return None
+    if [x_, y_] not in bond_flattened:
+        return None
+
+    lattice[y_][x_] = 1
+
+    for bond in bonds:
+        if bond and len(bond) > 1 and [x_, y_] in bond:
+            del bond[(bond.index([x_, y_]))]
+            update_lattice(bond[0][0], bond[0][1])
+
+
+for x in range(N):
+    update_lattice(x, 0)
+
+plt.figure()
+plt.imshow(lattice, cmap='gray')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Lattice of spaces connected to the top edge by bonds at p = {round(P, 2)}")
+
 
 plt.show()

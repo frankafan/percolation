@@ -40,7 +40,18 @@ id = 0
 for y in range(N):
     for x in range(N):
         if not full[y][x]:
-            id += 1
             update_full(x, y, id)
+            id += 1
+# print(full)
 
-print(full)
+
+N_clusters = max(np.ndarray.flatten(full)) + 1
+# print(N_clusters)
+
+clusters_x = []
+clusters_y = []
+for i in range(int(N_clusters)):
+    clusters_x.append([])
+    clusters_y.append([])
+
+print(clusters_x)

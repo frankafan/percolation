@@ -18,11 +18,25 @@ for i in range(len(bonds)):
     if random.random() < P:
         bonds[i] = False
 
+for i in range(len(bonds)):
+    if bonds[i]:
+        for j in range(len(bonds)):
+            if bonds[j] and bonds[j] != bonds[i]:
+                if bonds[i][0] == bonds[j][-1]:
+                    bonds[i] = bonds[j][0:len(bonds[j]) - 1] + bonds[i]
+                    bonds[j] = False
+                elif bonds[i][-1] == bonds[j][0]:
+                    bonds[i] = bonds[i] + bonds[j][1:len(bonds[j])]
+                    bonds[j] = False
+print(bonds)
 
 for i in range(len(bonds)):
     if bonds[i]:
-        bond_x = [bonds[i][0][0], bonds[i][1][0]]
-        bond_y = [bonds[i][0][1], bonds[i][1][1]]
-        plt.plot(bond_x, bond_y, 'black')
+        bond_x = []
+        bond_y = []
+        for j in range(len(bonds[i])):
+            bond_x.append(bonds[i][j][0])
+            bond_y.append(bonds[i][j][1])
+        plt.plot(bond_x, bond_y)
 
 plt.show()

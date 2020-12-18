@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 N = 50  # width and length of the network
 P = 0.6  # probability of a given site to be open
 particles = 5
-steps = 5
+steps = 500
 
 open = np.zeros((N, N))
 full = np.zeros((N, N))
@@ -100,8 +100,7 @@ print(paths_x, paths_y)
 # plt.imshow(full)
 
 plt.figure()
-for path_x in paths_x:
-    for path_y in paths_y:
-        plt.plot(path_x, path_y)
+for i in range(len(paths_x)):
+    plt.plot(paths_x[i], paths_y[i])
 
 plt.show()

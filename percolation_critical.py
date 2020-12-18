@@ -61,7 +61,7 @@ for P in np.arange(0.1, 1, 0.01):
         plt.title(f"Lattice of open and closed sites at p = {round(P, 2)}")
         if SAVEFIG:
             plt.savefig(
-                f"Lattice of open and closed sites at p = {round(P, 2)}" + ".png")
+                f"Lattice of open and closed sites at p = {round(P * 10)} / 10" + ".png")
 
         plt.figure()
         plt.imshow(full, cmap='gray')
@@ -71,7 +71,7 @@ for P in np.arange(0.1, 1, 0.01):
             f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
         if SAVEFIG:
             plt.savefig(
-                f"Lattice of full and empty / closed sites at p = {round(P, 2)}" + ".png")
+                f"Lattice of full and empty / closed sites at p = {round(P * 10)} / 10" + ".png")
 
     percolation_rates.append(percolations / trials)
 

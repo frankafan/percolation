@@ -2,71 +2,71 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-P = 0.6
-N = 100
+P = 0.49
+N = 50
 
-lattice = []
-for y in range(N):
-    row = []
-    for x in range(N):
-        row.append([])
-    lattice.append(row)
-
+bonds = []
 for y in range(N):
     for x in range(N):
-        for i in range(2):
-            if random.random() < P:
-                lattice[y][x].append(i)
-# print(lattice)
-full = np.zeros((N, N))
+        if y < N - 1:
+            bonds.append([[x, y], [x, y + 1]])
+        if x < N - 1:
+            bonds.append([[x, y], [x + 1, y]])
+
+for i in range(len(bonds)):
+    if random.random() < (1 - P):
+        bonds[i] = False
+# print(bonds)
+
+bond_flattened = []
+for bond in bonds:
+    if bond:
+        bond_flattened.extend(bond)
+# print(bond_flattened)
+
+plt.figure()
+for i in range(len(bonds)):
+    if bonds[i]:
+        bond_x = []
+        bond_y = []
+        for j in range(len(bonds[i])):
+            bond_x.append(bonds[i][j][0])
+            bond_y.append(bonds[i][j][1])
+        plt.plot(bond_x, bond_y, 'black')
+plt.ylim([N, 0])
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Lattice of connected bonds at p = {round(P, 2)}")
+
+lattice = np.zeros((N, N))
 
 
-def update_full(x_, y_, id_):
-    directions = lattice[y_][x_]
+def update_lattice(x_, y_):
     if x_ < 0 or x_ >= N:
         return None
     if y_ < 0 or y_ >= N:
         return None
-    if full[y_][x_]:
+    if lattice[y_][x_]:
+        return None
+    if [x_, y_] not in bond_flattened:
         return None
 
-    full[y_][x_] = id_
+    lattice[y_][x_] = 1
 
-    if 0 in directions and x_ < N - 1:
-        update_full(x_ + 1, y_, id_)
-    if 1 in directions and y_ < N - 1:
-        update_full(x_, y_ + 1, id_)
+    for bond in bonds:
+        if bond and len(bond) > 1 and [x_, y_] in bond:
+            del bond[(bond.index([x_, y_]))]
+            update_lattice(bond[0][0], bond[0][1])
 
 
-id = 0
-for y in range(N):
-    for x in range(N):
-        print(x, y)
-        if not full[y][x]:
-            update_full(x, y, id)
-            id += 1
-# print(full)
-
-N_clusters = max(np.ndarray.flatten(full)) + 1
-# print(N_clusters)
-
-clusters_x = []
-clusters_y = []
-for i in range(int(N_clusters)):
-    clusters_x.append([])
-    clusters_y.append([])
-
-for y in range(N):
-    for x in range(N):
-        clusters_x[int(full[y][x])].append(x)
-        clusters_y[int(full[y][x])].append(y)
+for x in range(N):
+    update_lattice(x, 0)
 
 plt.figure()
-for i in range(len(clusters_x)):
-    plt.plot(clusters_x[i], clusters_y[i], '.')
-    plt.xlim([0, N])
-    plt.ylim([N, 0])
+plt.imshow(lattice, cmap='gray')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Lattice of spaces connected to the top edge by bonds at p = {round(P, 2)}")
 
-plt.figure()
-plt.imshow(full)
+
 plt.show()

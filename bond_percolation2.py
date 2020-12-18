@@ -18,16 +18,25 @@ for i in range(len(bonds)):
     if random.random() < P:
         bonds[i] = False
 
+
+def connect_bonds(self, neighbor):
+    if not self or not neighbor:
+        return
+    if self == neighbor:
+        return
+
+    if self[0] == neighbor[-1]:
+        self = neighbor[0:len(neighbor) - 1] + self
+        neighbor = False
+    elif self[-1] == neighbor[0]:
+        self = self + neighbor[1:len(neighbor)]
+        neighbor = False
+    return self, neighbor
+
+
 for i in range(len(bonds)):
-    if bonds[i]:
-        for j in range(len(bonds)):
-            if bonds[j] and bonds[j] != bonds[i]:
-                if bonds[i][0] == bonds[j][-1]:
-                    bonds[i] = bonds[j][0:len(bonds[j]) - 1] + bonds[i]
-                    bonds[j] = False
-                elif bonds[i][-1] == bonds[j][0]:
-                    bonds[i] = bonds[i] + bonds[j][1:len(bonds[j])]
-                    bonds[j] = False
+    for j in range(len(bonds)):
+        connect_bonds(bonds[i], bonds[j])
 print(bonds)
 
 for i in range(len(bonds)):

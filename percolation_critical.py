@@ -6,9 +6,9 @@ import sys
 sys.setrecursionlimit(100000)
 
 N = 50  # width and length of the network
-trials = 10
+trials = 10000
 vertical = False
-SAVEFIG = False
+SAVEFIG = True
 
 
 def update_full(x_, y_, vertical_):
@@ -60,15 +60,18 @@ for P in np.arange(0.1, 1, 0.01):
         plt.ylabel("y")
         plt.title(f"Lattice of open and closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(f"Lattice of open and closed sites at p = {round(P, 2)}")
+            plt.savefig(
+                f"Lattice of open and closed sites at p = {round(P, 2)}" + ".png")
 
         plt.figure()
         plt.imshow(full, cmap='gray')
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.title(f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
+        plt.title(
+            f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
         if SAVEFIG:
-            plt.savefig(f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
+            plt.savefig(
+                f"Lattice of full and empty / closed sites at p = {round(P, 2)}" + ".png")
 
     percolation_rates.append(percolations / trials)
 

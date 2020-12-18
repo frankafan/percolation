@@ -2,8 +2,8 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-P = 0.5
-N = 10
+P = 0.6
+N = 100
 
 lattice = []
 for y in range(N):
@@ -27,6 +27,8 @@ def update_full(x_, y_, id_):
         return None
     if y_ < 0 or y_ >= N:
         return None
+    if full[y_][x_]:
+        return None
 
     full[y_][x_] = id_
 
@@ -39,11 +41,11 @@ def update_full(x_, y_, id_):
 id = 0
 for y in range(N):
     for x in range(N):
+        print(x, y)
         if not full[y][x]:
             update_full(x, y, id)
             id += 1
 # print(full)
-
 
 N_clusters = max(np.ndarray.flatten(full)) + 1
 # print(N_clusters)
@@ -54,4 +56,15 @@ for i in range(int(N_clusters)):
     clusters_x.append([])
     clusters_y.append([])
 
-print(clusters_x)
+for y in range(N):
+    for x in range(N):
+        clusters_x[int(full[y][x])].append(x)
+        clusters_y[int(full[y][x])].append(y)
+
+plt.figure()
+for i in range(len(clusters_x)):
+    plt.plot(clusters_x[i], clusters_y[i], '.')
+
+plt.figure()
+plt.imshow(full)
+plt.show()

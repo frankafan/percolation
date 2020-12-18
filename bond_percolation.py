@@ -64,6 +64,8 @@ for y in range(N):
 plt.figure()
 for i in range(len(clusters_x)):
     plt.plot(clusters_x[i], clusters_y[i], '.')
+    plt.xlim([0, N])
+    plt.ylim([N, 0])
 
 plt.figure()
 plt.imshow(full)

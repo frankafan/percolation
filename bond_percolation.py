@@ -1,9 +1,13 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import sys
 
-P = 0.50
-N = 50
+sys.setrecursionlimit(100000)
+
+P = 0.55
+N = 100
+SAVEFIG = True
 
 bonds = []
 for y in range(N):
@@ -37,6 +41,8 @@ plt.ylim([N, 0])
 plt.xlabel("x")
 plt.ylabel("y")
 plt.title(f"Lattice of connected bonds at p = {round(P, 2)}")
+if SAVEFIG:
+    plt.savefig("4")
 
 lattice = np.zeros((N, N))
 
@@ -74,5 +80,7 @@ plt.xlabel("x")
 plt.ylabel("y")
 plt.title(
     f"Lattice of spaces connected to the top edge by bonds at p = {round(P, 2)}")
+if SAVEFIG:
+    plt.savefig("4_")
 
 plt.show()

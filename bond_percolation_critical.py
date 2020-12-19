@@ -1,10 +1,13 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import sys
 
-N = 25
-trials = 1
-SAVEFIG = False
+sys.setrecursionlimit(100000)
+
+N = 50
+trials = 10000
+SAVEFIG = True
 
 
 def update_lattice(x_, y_):
@@ -27,7 +30,7 @@ def update_lattice(x_, y_):
 
 percolation_rates = []
 j = 1
-for P in np.arange(0.1, 0.7, 0.01):
+for P in np.arange(0.3, 0.7, 0.01):
     print(P)
     percolations = 0
 
@@ -68,7 +71,7 @@ for P in np.arange(0.1, 0.7, 0.01):
     percolation_rates.append(percolations / trials)
 
 plt.figure()
-plt.plot(np.arange(0.1, 0.7, 0.01), percolation_rates)
+plt.plot(np.arange(0.3, 0.7, 0.01), percolation_rates)
 plt.xlabel("$p$")
 plt.ylabel("Percolation probability")
 plt.title(f"Percolation probability over $p$ for {trials} trials")

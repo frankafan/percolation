@@ -6,7 +6,7 @@ import sys
 sys.setrecursionlimit(100000)
 
 N = 50
-trials = 10000
+trials = 1000
 SAVEFIG = True
 
 

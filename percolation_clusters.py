@@ -1,9 +1,13 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import sys
 
-N = 150  # width and length of the network
-P = 0.6  # probability of a given site to be open
+sys.setrecursionlimit(100000)
+
+N = 100  # width and length of the network
+P = 0.7  # probability of a given site to be open
+SAVEFIG = True
 
 open = np.zeros((N, N))
 full = np.zeros((N, N))
@@ -43,8 +47,19 @@ print(max(np.ndarray.flatten(full)))
 
 plt.figure()
 plt.imshow(open, cmap='gray')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Lattice of open and closed sites at p = {round(P, 2)}")
+if SAVEFIG:
+    plt.savefig("5")
 
 plt.figure()
-plt.imshow(full)
+plt.imshow(full, cmap='gist_ncar')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(
+    f"Lattice of full and empty / closed sites at p = {round(P, 2)}")
+if SAVEFIG:
+    plt.savefig("5_")
 
 plt.show()

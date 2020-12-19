@@ -2,10 +2,10 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-N = 50  # width and length of the network
-P = 0.6  # probability of a given site to be open
+N = 100  # width and length of the network
+P = 0.59  # probability of a given site to be open
 particles = 10
-steps = 500
+steps = 2000
 
 open = np.zeros((N, N))
 full = np.zeros((N, N))
@@ -101,8 +101,11 @@ for i in range(particles):
 # plt.imshow(full)
 
 plt.figure()
-plt.imshow(full, cmap='hot')
+plt.imshow(full)
 for i in range(len(paths_x)):
-    plt.plot(paths_x[i], paths_y[i])
-
+    plt.plot(paths_x[i], paths_y[i], label=i+1)
+plt.legend()
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title(f"Paths of {particles} random-walking particles for {steps} steps")
 plt.show()

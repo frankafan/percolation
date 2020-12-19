@@ -1,18 +1,13 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import sys
+
+sys.setrecursionlimit(100000)
 
 N = 100  # width and length of the network
-P = 0.59  # probability of a given site to be open
-particles = 100
+particles = 500
 steps = 10000
-
-open = np.zeros((N, N))
-full = np.zeros((N, N))
-for y in range(N):
-    for x in range(N):
-        if random.random() < P:
-            open[y][x] = 1
 
 
 def update_full(x_, y_, id_):
@@ -31,18 +26,6 @@ def update_full(x_, y_, id_):
     update_full(x_ - 1, y_, id_)
     update_full(x_, y_ + 1, id_)
     update_full(x_, y_ - 1, id_)
-
-
-id = 0
-for y in range(N):
-    for x in range(N):
-        if open[y][x] and not full[y][x]:
-            id += 1
-            update_full(x, y, id)
-
-
-# print(full)
-# print(max(np.ndarray.flatten(full)))
 
 
 def next_move(x_, y_, full_):
@@ -77,36 +60,57 @@ def next_move(x_, y_, full_):
     return x_, y_
 
 
-paths_x = []
-paths_y = []
-displacements = []
-for i in range(particles):
-    start_x, start_y = random.randint(0, N - 1), random.randint(0, N - 1)
-    while not open[start_y][start_x]:
+for P in np.arange(0.4, 0.8, 0.1):
+    print(P)
+    open = np.zeros((N, N))
+    full = np.zeros((N, N))
+    for y in range(N):
+        for x in range(N):
+            if random.random() < P:
+                open[y][x] = 1
+
+    id = 0
+    for y in range(N):
+        for x in range(N):
+            if open[y][x] and not full[y][x]:
+                id += 1
+                update_full(x, y, id)
+
+    # print(full)
+    # print(max(np.ndarray.flatten(full)))
+
+    paths_x = []
+    paths_y = []
+    displacements = []
+    for i in range(particles):
         start_x, start_y = random.randint(0, N - 1), random.randint(0, N - 1)
-    path_x, path_y = [start_x], [start_y]
-    displacement = []
-    for j in range(steps):
-        xp, yp = next_move(path_x[-1], path_y[-1], full)
-        path_x.append(xp)
-        path_y.append(yp)
-        if j == 0:
-            if xp == start_x and yp == start_y:
-                break
-        displacement.append(np.sqrt((start_x - xp) ** 2 + (start_y - yp) ** 2))
-    displacements.append(displacement)
-    paths_x.append(path_x)
-    paths_y.append(path_y)
+        while not open[start_y][start_x]:
+            start_x, start_y = random.randint(0, N - 1), random.randint(0,
+                                                                        N - 1)
+        path_x, path_y = [start_x], [start_y]
+        displacement = []
+        for j in range(steps):
+            xp, yp = next_move(path_x[-1], path_y[-1], full)
+            path_x.append(xp)
+            path_y.append(yp)
+            if j == 0:
+                if xp == start_x and yp == start_y:
+                    break
+            displacement.append(
+                np.sqrt((start_x - xp) ** 2 + (start_y - yp) ** 2))
+        displacements.append(displacement)
+        paths_x.append(path_x)
+        paths_y.append(path_y)
 
-displacement_total = np.arange(0, steps, 1)
-for i in range(particles):
-    for j in range(steps):
-        if len(displacements[i]):
-            displacement_total[j] += displacements[i][j]
+    displacement_total = np.arange(0, steps, 1)
+    for i in range(particles):
+        for j in range(steps):
+            if len(displacements[i]):
+                displacement_total[j] += displacements[i][j]
 
-plt.figure()
-plt.plot(np.arange(0, steps, 1), displacement_total)
-plt.title(f"Total displacement of {particles} particles over {steps} steps")
-plt.xlabel("Steps")
-plt.ylabel("Displacement")
+    plt.plot(np.arange(0, steps, 1), displacement_total, label=f"$p$ = {round(P, 2)}")
+    plt.legend()
+    plt.title(f"Total displacement of {particles} particles over {steps} steps")
+    plt.xlabel("Steps")
+    plt.ylabel("Displacement")
 plt.show()
